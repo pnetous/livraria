@@ -9,10 +9,9 @@ String classe = "";
     Categoria obj = new Categoria();
     //verifica se é postm ou seja, quer alterar
     if(request.getMethod().equals("POST")){
-        obj.setId(Integer.parseInt(request.getParameter("codigo")));
+        
+        //popular com oq ele digitou no form
         obj.setNome(request.getParameter("txtNome"));
-    
-       
         
         
         Boolean resultado = dao.alterar(obj);

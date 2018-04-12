@@ -1,17 +1,19 @@
-<%@page import="dao.CategoriaDAO"%>
-<%@page import="modelo.Categoria"%>
+<%@page import="dao.AutorDAO"%>
+<%@page import="modelo.Autor"%>
 <%@page import="java.util.List"%>
 
 <%@include file="../cabecalho.jsp" %>
 <%
     String msg = "";
     String classe = "";
-    Categoria obj = new Categoria();
-    CategoriaDAO dao = new CategoriaDAO();
+    Autor obj = new Autor();
+    AutorDAO dao = new AutorDAO();
     
     if (request.getParameter("txtNome") != null) {
         obj.setNome(request.getParameter("txtNome"));
-       
+        obj.setNacionalidade(request.getParameter("txtNacionalidade"));
+        obj.setSexo(request.getParameter("Sexo").charAt(0)); 
+        obj.setFoto(request.getParameter("Foto"));
       
         Boolean resultado = dao.incluir(obj);
         if (resultado) {
@@ -45,20 +47,30 @@
 <div class="row">
     <div class="panel panel-default">
         <div class="panel-heading">
-            Categorias
+            Autors
         </div>
         <div class="panel-body">
 
             <div class="alert <%=classe%>">
                 <%=msg%>
             </div>
-            <form action="#" method="post">
+            <form action="../UploadWS" method="POST" enctype="multipart/form-data">
 
                 <div class="col-lg-6">
 
                     <div class="form-group">
                         <label>Nome</label>
                         <input class="form-control" type="text"  name="txtNome"  required />
+                        <label>Sexo</label>
+                        <select name="Sexo"> 
+                            <option value='M'> Masculino </option> 
+                            <option value='F'> Feminino </option>  
+                        <label>Nacionalidade</label>
+                        <input class="form-control" type="text" name="txtNacionalidade" required />
+                        
+                        <label>Foto</label>
+                        <input type="File" name="Foto"/> 
+                                
                     </div>
                     <div class="form-group">
                         
