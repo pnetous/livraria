@@ -78,6 +78,9 @@
                     <li>
                         <a href="../autor/"><i class="fa fa-fw fa-bar-chart-o"></i> Autores</a>
                     </li>
+                     <li>
+                        <a href="../editora/"><i class="fa fa-fw fa-bar-chart-o"></i> Editoras</a>
+                    </li>
                     
                 </ul>
             </div>

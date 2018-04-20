@@ -1,19 +1,49 @@
+<%@page import="modelo.Editora"%>
+<%@page import="dao.EditoraDAO"%>
+<%@page import="dao.CategoriaDAO"%>
+<%@page import="modelo.Categoria"%>
 <%@page import="dao.AutorDAO"%>
 <%@page import="modelo.Autor"%>
+<%@page import="util.StormData"%>
+<%@page import="dao.LivroDAO"%>
+<%@page import="modelo.Livro"%>
 <%@page import="java.util.List"%>
 
 <%@include file="../cabecalho.jsp" %>
 <%
     String msg = "";
     String classe = "";
-    Autor obj = new Autor();
-    AutorDAO dao = new AutorDAO();
+    Livro obj = new Livro();
+    LivroDAO dao = new LivroDAO();
+    
+    
+    CategoriaDAO cdao = new CategoriaDAO();
+    Categoria clista = new Categoria();
+    Categoria c = new Categoria();
+    c.setId("codigo");
+    
+    EditoraDAO edao = new EditoraDAO();
+    Editora elista = new Editora();
+    Editora e = new Editora();
+    e.setCnpj("txtCnpj");
+    
+
+    
     
     if (request.getParameter("txtNome") != null) {
         obj.setNome(request.getParameter("txtNome"));
-        obj.setNacionalidade(request.getParameter("txtNacionalidade"));
-        obj.setSexo(request.getParameter("Sexo").charAt(0)); 
-        obj.setFoto(request.getParameter("Foto"));
+        obj.setPreco (Float.parseFloat(request.getParameter("txtPreco")));
+        obj.setDatapublicacao (StormData.formata(request.getParameter("data")));
+        obj.setFoto1(request.getParameter("foto1"));
+        obj.setFoto2(request.getParameter("foto2"));
+        obj.setFoto3(request.getParameter("foto3"));
+        obj.setSinopse(request.getParameter("txtSinopse"));
+    
+        
+     
+     
+        
+     
       
         Boolean resultado = dao.incluir(obj);
         if (resultado) {
@@ -47,7 +77,7 @@
 <div class="row">
     <div class="panel panel-default">
         <div class="panel-heading">
-            Autors
+            Livros
         </div>
         <div class="panel-body">
 
@@ -61,17 +91,11 @@
                     <div class="form-group">
                         <label>Nome</label>
                         <input class="form-control" type="text"  name="txtNome"  required />
-                        <label>Sexo</label>
-                        <select name="Sexo"> 
-                            <option value='M'> Masculino </option> 
-                            <option value='F'> Feminino </option>  
-                        </select>
-                        </br>
-                            
-                        <label> Nacionalidade </label>
-                        <input class="form-control" type="text" name="txtNacionalidade" required />
+                        <label>CNPJ</label>
+                        <input class="form-control" type="text"  name="txtCnpj"  required />
+                    
                         
-                        <label>Foto</label>
+                        <label>Logo</label>
                         <input type="File" name="Foto"/> 
                                 
                     </div>

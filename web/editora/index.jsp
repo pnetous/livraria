@@ -1,12 +1,12 @@
 <%@page import="java.util.List"%>
-<%@page import="modelo.Autor"%>
-<%@page import="dao.AutorDAO"%>
+<%@page import="modelo.Editora"%>
+<%@page import="dao.EditoraDAO"%>
 <%@include file="../cabecalho.jsp" %>
 
 <% 
     
-    AutorDAO dao = new AutorDAO();
-    List<Autor> lista;
+    EditoraDAO dao = new EditoraDAO();
+    List<Editora> lista;
     
     if (request.getParameter("txtFiltro") != null) {
         lista = dao.listar(request.getParameter("txtFiltro"));
@@ -15,7 +15,7 @@
    
     //verifico se é excluir
         if(request.getParameter("codigo") != null){
-            Autor obj = dao.buscarPorChavePrimaria(Integer.parseInt(request.getParameter("codigo")));
+            Editora obj = dao.buscarPorChavePrimaria(Integer.parseInt(request.getParameter("codigo")));
             if(obj != null){
                 dao.excluir(obj);
             }
@@ -31,7 +31,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Gerenciamento de Autors
+            Gerenciamento de Editoras
 
         </h1>
         <ol class="breadcrumb">
@@ -71,29 +71,28 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>Código</th>
+                  
                         <th>Nome</th>
-                        <th> Nacionalidade </th>
-                        <th> Sexo </th>
-                        <th> Foto </th>
+                        <th>CNPJ </th>
+                        <th> Logo </th>
+                    
                         
                         <th>Ações</th>
                  
                     </tr>
                 </thead>
                 <tbody>
-                    <%for(Autor item: lista)
+                    <%for(Editora item: lista)
                     {
                     %>
                     <tr>
-                        <td><%=item.getId()%></td>
-                        <td><%=item.getNome() %></td>
-                        <td><%=item.getNacionalidade() %> </td>
-                        <td><%=item.getSexo()%> </td>   
-                        <td><img src="../arquivos/<%=item.getFoto()%>" width="70" height="50" />  </td>
                         
-                        <td><a href="upd.jsp?codigo=<%=item.getId()%>" class="btn  btn-primary btn-sm">Alterar</a>
-                            <button class="btn  btn-danger btn-sm" data-toggle="modal" data-target="#myModal" onclick="codigo=<%=item.getId()%>">Excluir</button>  
+                        <td><%=item.getNome()%></td>
+                        <td><%=item.getCnpj()%></td>                     
+                        <td><img src="../arquivos/ <%=item.getLogo()%>" width="70" height="50" />  </td>
+                        
+                        <td><a href="upd.jsp?codigo=<%=item.getCnpj()%>" class="btn  btn-primary btn-sm">Alterar</a>
+                            <button class="btn  btn-danger btn-sm" data-toggle="modal" data-target="#myModal" onclick="codigo=<%=item.getCnpj()%>">Excluir</button>  
                         </td>
                     </tr>
                     <% } %>
