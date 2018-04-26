@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="modelo.Editora"%>
 <%@page import="dao.EditoraDAO"%>
 <%@page import="dao.CategoriaDAO"%>
@@ -13,14 +14,15 @@
 <%
     String msg = "";
     String classe = "";
+    
     Livro obj = new Livro();
     LivroDAO dao = new LivroDAO();
+    
     
     
     CategoriaDAO cdao = new CategoriaDAO();
     Categoria clista = new Categoria();
     Categoria c = new Categoria();
-    c.setId("codigo");
     
     EditoraDAO edao = new EditoraDAO();
     Editora elista = new Editora();
@@ -38,7 +40,21 @@
         obj.setFoto2(request.getParameter("foto2"));
         obj.setFoto3(request.getParameter("foto3"));
         obj.setSinopse(request.getParameter("txtSinopse"));
-    
+        c.setId (Integer.parseInt(request.getParameter("id")));
+
+       AutorDAO adao = new AutorDAO();
+        if(request.getMethod().equals("POST")){
+           String[] autoresid = request.getParameterValues("autores");
+            
+        List<Autor> listaautores = new ArrayList<>();
+        for (String id : autoresid) {
+            Integer idinteger = Integer.parseInt(id);
+            listaautores.add(adao.buscarPorChavePrimaria(idinteger));
+        }
+        
+        obj.setAutorList(listaautores);
+        
+        dao.incluir(obj);
         
      
      
@@ -91,12 +107,30 @@
                     <div class="form-group">
                         <label>Nome</label>
                         <input class="form-control" type="text"  name="txtNome"  required />
-                        <label>CNPJ</label>
-                        <input class="form-control" type="text"  name="txtCnpj"  required />
-                    
-                        
-                        <label>Logo</label>
-                        <input type="File" name="Foto"/> 
+                        <label> Preço </label>>
+                        <input class="form-control" type="text"  name="txtPreco"  required />
+                        <label> Data </label>>
+                        <input class="form-control" type="text"  name="data"  required />
+                        <label> Foto </label>>
+                        <input type="File" name="foto1"/> 
+                        <label> Foto </label>>
+                        <input type="File" name="foto2"/>
+                        <label> Foto </label>>
+                        <input type="File" name="foto3"/> 
+                        <label> Sinopse </label>>
+                        <input class="form-control" type="text"  name="txtSinopse"  required />
+                        <label> Categoria </label>
+                        <select name="txtCategoria" required />
+                        <%
+                            for (Categoria item : clista) {
+                        %> }
+                                <option value="<%=item.getId()%>">
+                                    <%=item.getNome()%>">
+                                    
+                            }
+                            }
+
+                        <input class="form-control" type="text"  name="txtSinopse"  required />    
                                 
                     </div>
                     <div class="form-group">

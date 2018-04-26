@@ -6,25 +6,23 @@
 package modelo;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
+import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,17 +30,8 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "livro")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Livro.findAll", query = "SELECT l FROM Livro l"),
-    @NamedQuery(name = "Livro.findById", query = "SELECT l FROM Livro l WHERE l.id = :id"),
-    @NamedQuery(name = "Livro.findByNome", query = "SELECT l FROM Livro l WHERE l.nome = :nome"),
-    @NamedQuery(name = "Livro.findByPreco", query = "SELECT l FROM Livro l WHERE l.preco = :preco"),
-    @NamedQuery(name = "Livro.findByDatapublicacao", query = "SELECT l FROM Livro l WHERE l.datapublicacao = :datapublicacao"),
-    @NamedQuery(name = "Livro.findByFoto1", query = "SELECT l FROM Livro l WHERE l.foto1 = :foto1"),
-    @NamedQuery(name = "Livro.findByFoto2", query = "SELECT l FROM Livro l WHERE l.foto2 = :foto2"),
-    @NamedQuery(name = "Livro.findByFoto3", query = "SELECT l FROM Livro l WHERE l.foto3 = :foto3"),
-    @NamedQuery(name = "Livro.findBySinopse", query = "SELECT l FROM Livro l WHERE l.sinopse = :sinopse")})
+    @NamedQuery(name = "Livro.findAll", query = "SELECT l FROM Livro l")})
 public class Livro implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -69,14 +58,17 @@ public class Livro implements Serializable {
     private String foto3;
     @Column(name = "sinopse")
     private String sinopse;
+       @JoinTable(name = "autor_livro", joinColumns = {
+        @JoinColumn(name = "livro", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "autor", referencedColumnName = "id")})
+    @ManyToMany 
+    private List<Autor> autorList;
     @JoinColumn(name = "categoria", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Categoria categoria;
     @JoinColumn(name = "editora", referencedColumnName = "cnpj")
     @ManyToOne(optional = false)
     private Editora editora;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "livro")
-    private List<AutorLivro> autorLivroList;
 
     public Livro() {
     }
@@ -156,6 +148,14 @@ public class Livro implements Serializable {
         this.sinopse = sinopse;
     }
 
+    public List<Autor> getAutorList() {
+        return autorList;
+    }
+
+    public void setAutorList(List<Autor> autorList) {
+        this.autorList = autorList;
+    }
+
     public Categoria getCategoria() {
         return categoria;
     }
@@ -170,15 +170,6 @@ public class Livro implements Serializable {
 
     public void setEditora(Editora editora) {
         this.editora = editora;
-    }
-
-    @XmlTransient
-    public List<AutorLivro> getAutorLivroList() {
-        return autorLivroList;
-    }
-
-    public void setAutorLivroList(List<AutorLivro> autorLivroList) {
-        this.autorLivroList = autorLivroList;
     }
 
     @Override
