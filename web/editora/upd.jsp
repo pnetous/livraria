@@ -9,11 +9,10 @@ String classe = "";
     Editora obj = new Editora();
     //verifica se é postm ou seja, quer alterar
     if(request.getMethod().equals("POST")){
-        
-        obj.setCnpj(request.getParameter("txtCnpj"));
+        obj.setCnpj(request.getParameter("codigo"));
         obj.setNome(request.getParameter("txtNome"));
         obj.setLogo(request.getParameter("Logo"));
-     
+      
     
        
         
@@ -37,7 +36,7 @@ String classe = "";
         }
         
         dao = new EditoraDAO();
-        obj = dao.buscarPorChavePrimaria((request.getParameter("codigo")));
+        obj = dao.buscarPorChavePrimaria(request.getParameter("codigo"));
         
         if(obj == null){
             response.sendRedirect("index.jsp");
@@ -77,7 +76,7 @@ String classe = "";
 
                     <div class="form-group">
                         <label>CNPJ</label>
-                        <input class="form-control" type="text" name="txtCnpj" readonly value="<%=obj.getCnpj()%>"/>
+                        <input class="form-control" type="text" name="codigo" readonly value="<%=obj.getCnpj()%>"/>
                     </div>
                     
                     <div class="form-group">
@@ -86,10 +85,11 @@ String classe = "";
                         
                     <div class="form-group">
                         <label>Logo</label>
-                        <input class="form-control" type="text" name="Logo" required value="<%=obj.getLogo()%>" />
+                        <input type="File" name="Logo"/> 
                         
-                    
-
+                    <div class="form-group">
+                   
+                        
                 <button class="btn btn-primary btn-sm" type="submit">Salvar</button>
                 
             </form>

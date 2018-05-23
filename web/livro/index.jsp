@@ -1,12 +1,13 @@
+<%@page import="util.StormData"%>
 <%@page import="java.util.List"%>
-<%@page import="modelo.Editora"%>
-<%@page import="dao.EditoraDAO"%>
+<%@page import="modelo.Livro"%>
+<%@page import="dao.LivroDAO"%>
 <%@include file="../cabecalho.jsp" %>
 
 <% 
     
-    EditoraDAO dao = new EditoraDAO();
-    List<Editora> lista;
+    LivroDAO dao = new LivroDAO();
+    List<Livro> lista;
     
     if (request.getParameter("txtFiltro") != null) {
         lista = dao.listar(request.getParameter("txtFiltro"));
@@ -14,8 +15,8 @@
     } else{ 
    
     //verifico se é excluir
-        if(request.getParameter("codigo") != null){
-            Editora obj = dao.buscarPorChavePrimaria(Integer.parseInt(request.getParameter("codigo")));
+    if(request.getParameter("codigo") != null){
+            Livro obj = dao.buscarPorChavePrimaria(Integer.parseInt(request.getParameter("codigo")));
             if(obj != null){
                 dao.excluir(obj);
             }
@@ -31,7 +32,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Gerenciamento de Editoras
+            Gerenciamento de Livros
 
         </h1>
         <ol class="breadcrumb">
@@ -71,28 +72,35 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                  
+                        <th >Id</th>
                         <th>Nome</th>
-                        <th>CNPJ </th>
-                        <th> Logo </th>
-                    
-                        
-                        <th>Ações</th>
-                 
+                        <th >Preço</th>
+                        <th >Editora</th>
+                        <th >Data de Publicação</th>
+                        <th >Categoria</th>
+                        <th >Sinopse</th>
+                        <th >Foto</th>
+                        <th >Foto 2</th>
+                        <th >Foto 3</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <%for(Editora item: lista)
+                    <%for(Livro item: lista)
                     {
                     %>
                     <tr>
-                        
-                        <td><%=item.getNome()%></td>
-                        <td><%=item.getCnpj()%></td>                     
-                        <td><img src="../arquivos/ <%=item.getLogo()%>" width="70" height="50" />  </td>
-                        
-                        <td><a href="upd.jsp?codigo=<%=item.getCnpj()%>" class="btn  btn-primary btn-sm">Alterar</a>
-                            <button class="btn  btn-danger btn-sm" data-toggle="modal" data-target="#myModal" onclick="codigo=<%=item.getCnpj()%>">Excluir</button>  
+                        <td><%=item.getId()%></td>
+                        <td><%=item.getNome() %></td>
+                        <td><%=item.getPreco()%></td>
+                        <td><%=item.getEditora()%></td>
+                        <td><%=StormData.formata(item.getDatapublicacao())%></td>
+                        <td><%=item.getCategoria()%></td>
+                        <td><%=item.getSinopse()%></td>
+                        <td><img src = "../arquivos/<%=item.getFoto1()%>" width="100" height = "80" /></td>
+                        <td><img src = "../arquivos/<%=item.getFoto2()%>" width="100" height = "80" /></td>
+                        <td><img src = "../arquivos/<%=item.getFoto3()%>" width="100" height = "80" /></td>
+                        <td><a href="upd.jsp?id=<%=item.getId()%>" class="btn  btn-primary btn-sm">Alterar</a>
+                            <button class="btn  btn-danger btn-sm" data-toggle="modal" data-target="#myModal" onclick="codigo=<%=item.getId()%>">Excluir</button>  
                         </td>
                     </tr>
                     <% } %>

@@ -13,7 +13,15 @@ String classe = "";
         obj.setNome(request.getParameter("txtNome"));
         obj.setNacionalidade(request.getParameter("txtNacionalidade"));
         obj.setSexo(request.getParameter("Sexo").charAt(0)); 
-        obj.setFoto("Foto");
+        if(request.getParameter("Foto") !=null)
+        {
+             obj.setFoto(request.getParameter("Foto"));
+        }
+        else 
+        {
+            obj.setFoto(request.getParameter("txtFotoVelha"));
+        }
+       
     
        
         
@@ -93,11 +101,13 @@ String classe = "";
                         <select name="Sexo"> 
                             <option value='M'> Masculino </option> 
                             <option value='F'> Feminino </option> 
-                        <input class="form-control" type="text" required value="<%=obj.getSexo()%>" />
+                        </select>
                         
                     <div class="form-group">
                         <label>Foto</label>
-                        <input class="form-control" type="file" name="Foto" required value="<%=obj.getFoto()%>" />
+                        <input class="form-control" type="file" name="Foto"/>
+                        <input type="hidden" name="txtFotoVelha" value="<%=obj.getFoto()%>" />        
+
                     
 
                 <button class="btn btn-primary btn-sm" type="submit">Salvar</button>

@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<%
+    // verifica se está logado
+    if(session.getAttribute("administrador")==null) {
+    response.sendRedirect("../login.jsp");
+            return;
+    }
+
+%>
 <html lang="pt-br">
 
 <head>
@@ -9,7 +17,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sistema de Comércio Eletrônico</title>
+    <title>Livraria do Tio Paulo</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -81,7 +89,9 @@
                      <li>
                         <a href="../editora/"><i class="fa fa-fw fa-bar-chart-o"></i> Editoras</a>
                     </li>
-                    
+                     <li>
+                        <a href="../livro/"><i class="fa fa-fw fa-bar-chart-o"></i> Livro</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

@@ -6,6 +6,7 @@
 <% 
     
     EditoraDAO dao = new EditoraDAO();
+   
     List<Editora> lista;
     
     if (request.getParameter("txtFiltro") != null) {
@@ -15,7 +16,7 @@
    
     //verifico se é excluir
         if(request.getParameter("codigo") != null){
-            Editora obj = dao.buscarPorChavePrimaria(Integer.parseInt(request.getParameter("codigo")));
+            Editora obj = dao.buscarPorChavePrimaria(request.getParameter("codigo"));
             if(obj != null){
                 dao.excluir(obj);
             }
@@ -74,7 +75,7 @@
                   
                         <th>Nome</th>
                         <th>CNPJ </th>
-                        <th> Logo </th>
+                        <th>Logo </th>
                     
                         
                         <th>Ações</th>

@@ -73,7 +73,6 @@
                         
                         <label>Foto</label>
                         <input type="File" name="Foto"/> 
-                                
                     </div>
                     <div class="form-group">
                         
