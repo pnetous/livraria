@@ -6,9 +6,11 @@
 package modelo;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,9 +22,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,6 +37,9 @@ import javax.persistence.TemporalType;
 @NamedQueries({
     @NamedQuery(name = "Livro.findAll", query = "SELECT l FROM Livro l")})
 public class Livro implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "livro")
+    private Collection<Compralivro> compralivroCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -195,6 +202,15 @@ public class Livro implements Serializable {
     @Override
     public String toString() {
         return "modelo.Livro[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Compralivro> getCompralivroCollection() {
+        return compralivroCollection;
+    }
+
+    public void setCompralivroCollection(Collection<Compralivro> compralivroCollection) {
+        this.compralivroCollection = compralivroCollection;
     }
     
 }

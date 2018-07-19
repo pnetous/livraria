@@ -1,12 +1,28 @@
-<!DOCTYPE html>
+<%@page import="dao.AutorDAO"%>
+<%@page import="modelo.Categoria"%>
+<%@page import="dao.CategoriaDAO"%>
+<%@page import="java.util.List"%>
+<%@page import="modelo.Livro"%>
+<%@page import="dao.LivroDAO"%>
+<%
+    CategoriaDAO cdao = new CategoriaDAO();
+    List<Categoria> lista = cdao.listar();
+    cdao.fecharConexao();
+    
+    AutorDAO adao = new AutorDAO();
+    
+    %>
+  
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
+
+    <head>
+        
+        <meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-		<title>Electro - HTML Ecommerce Template</title>
+		<title>Livraria Neto</title>
 
 		<!-- Google font -->
 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
@@ -43,12 +59,12 @@
 				<div class="container">
 					<ul class="header-links pull-left">
 						<li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
-						<li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
-						<li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
+						<li><a href="#"><i class="fa fa-envelope-o"></i> livraria@neto.com</a></li>
+						<li><a href="#"><i class="fa fa-map-marker"></i> Bage - RS</a></li>
 					</ul>
 					<ul class="header-links pull-right">
-						<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-						<li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
+						<li><a href="#"><i class="fa fa-dollar"></i> R$</a></li>
+						<li><a href="#"><i class="fa fa-user-o"></i> Meu Perfil</a></li>
 					</ul>
 				</div>
 			</div>
@@ -72,17 +88,19 @@
 
 						<!-- SEARCH BAR -->
 						<div class="col-md-6">
+                                                    <% for (Categoria categoria : lista) {
+                                        %>
 							<div class="header-search">
 								<form>
 									<select class="input-select">
-										<option value="0">All Categories</option>
-										<option value="1">Category 01</option>
-										<option value="1">Category 02</option>
+										<option value="0">Todas as Categorias</option>
+                                                                                <option value="1"> <%=categoria.getNome()%> </option>
 									</select>
 									<input class="input" placeholder="Search here">
-									<button class="search-btn">Search</button>
+									<button class="search-btn">Pesquisar</button>
 								</form>
 							</div>
+                                                        <%}%>
 						</div>
 						<!-- /SEARCH BAR -->
 
@@ -93,7 +111,7 @@
 								<div>
 									<a href="#">
 										<i class="fa fa-heart-o"></i>
-										<span>Your Wishlist</span>
+										<span>Lista de Desejos</span>
 										<div class="qty">2</div>
 									</a>
 								</div>
@@ -103,7 +121,7 @@
 								<div class="dropdown">
 									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 										<i class="fa fa-shopping-cart"></i>
-										<span>Your Cart</span>
+										<span>Seu Carrinho</span>
 										<div class="qty">3</div>
 									</a>
 									<div class="cart-dropdown">
@@ -136,7 +154,7 @@
 										</div>
 										<div class="cart-btns">
 											<a href="#">View Cart</a>
-											<a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+											<a href="checkout.jsp">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
 										</div>
 									</div>
 								</div>
@@ -160,7 +178,9 @@
 			</div>
 			<!-- /MAIN HEADER -->
 		</header>
-                <!-- NAVIGATION -->
+		<!-- /HEADER -->
+
+		<!-- NAVIGATION -->
 		<nav id="navigation">
 			<!-- container -->
 			<div class="container">
@@ -169,9 +189,9 @@
 					<!-- NAV -->
 					<ul class="main-nav nav navbar-nav">
 						<li class="active"><a href="#">Home</a></li>
-						<li><a href="#">Hot Deals</a></li>
-						<li><a href="#">Categories</a></li>
-						<li><a href="#">Laptops</a></li>
+						<li><a href="#">Super Ofertas</a></li>
+						<li><a href="#">Lançamentos</a></li>
+						<li><a href="#">Categorias</a></li>
 						
 					</ul>
 					<!-- /NAV -->
