@@ -26,7 +26,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "cliente")
 @NamedQueries({
-    @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c")})
+    @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c"),
+    @NamedQuery(name = "Cliente.login", query = "SELECT c FROM Cliente c WHERE "+ "c.email = :email and c.senha = :senha")})
+
 public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1L;

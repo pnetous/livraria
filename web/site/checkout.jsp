@@ -2,6 +2,12 @@
 
 
 <%@include file="cabecalho.jsp"%>
+<% if(session.getAttribute("cliente") == null)
+{
+    response.sendRedirect("login.jsp");
+    return;
+}
+%>
 
 		<!-- SECTION -->
 		<div class="section">

@@ -16,4 +16,10 @@ public class ClienteDAO extends GenericDAO<Cliente, Integer> {
         super(Cliente.class);
     }
     
+    public Cliente logar(String email, String senha)
+    {
+        Cliente retorno;
+        em.createNamedQuery("Cliente.login").setParameter("email", email).setParameter("senha", senha);
+    }
+    
 }
